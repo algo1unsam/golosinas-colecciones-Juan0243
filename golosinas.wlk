@@ -112,7 +112,7 @@ object golosinaBaniada {
 object tuti {
   const property peso = 5
   var property libreGluten = 0
-  var property precios = 0
+  var property precio = 0
   var property gustos = ["frutilla", "chocolate", "naranja"]
   
   method libreGluten(_valor) {
@@ -120,12 +120,12 @@ object tuti {
     
   }
 
-  method precio() {
+  method precios() {
 
     if (libreGluten == 1) {
-        precios = 7
+        precio = 7
     } else  if (libreGluten == 0){
-        precios = 10 
+        precio = 10 
     }
   }
   
@@ -135,4 +135,41 @@ object tuti {
   }
   
   method gusto() = gustos.first()
+}
+
+//parte 2
+
+object mariano {
+    var property bolsa = []
+
+    method comprar(unaGolosina) {
+      bolsa.add(unaGolosina)
+    }
+    method desechar(unaGolosina) {
+      bolsa.remove(unaGolosina)
+    }
+    method probarGolosinas() {
+      bolsa.forEach({golosina => golosina.mordisco()})
+    }
+    method hayGolosinasSinTACC() {
+        return bolsa.any({golosina => golosina.libreGluten()})
+    }
+    method preciosCuidados() {
+        return bolsa.all({golosina => golosina.precio() <= 10})
+    }
+    method golosinaDeSabor(unSabor) {
+        return bolsa.first({golosina => golosina.sabor(unSabor)})
+    }
+    method golosinasDeSabor(unSabor) {
+        return bolsa.find({golosina => golosina.sabor(unSabor)}).asSet()
+    }
+    method sabores() {
+        return bolsa.map({golosina => golosina.sabor()}).asSet()
+    }
+    method golosinaMasCara() {
+        return bolsa.max({golosina => golosina.precio()})
+    }
+    method pesoGolosinas() {
+        return bolsa.sum({golosina => golosina.peso()})
+    }
 }
